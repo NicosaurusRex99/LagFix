@@ -2,6 +2,12 @@ package naturix.lagfix.command;
 
 import java.util.Arrays;
 import java.util.List;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import com.google.common.collect.Lists;
+
+import java.util.Collections;
 
 import naturix.lagfix.Do;
 import naturix.lagfix.LagFix;
@@ -16,9 +22,13 @@ import net.minecraft.world.World;
 
 public class CommandNukeUp implements ICommand {
 
-  private ICommandSender icommandsender;
+  private ICommandSender sender;
 private String[] params;
-
+private final List<String> aliases;
+	public CommandNukeUp(){
+    aliases = Lists.newArrayList(LagFix.MODID, "nu");
+}
+	
 @Override
   public String getName() {
     return "nukeup";
@@ -29,7 +39,7 @@ private String[] params;
     return Arrays.asList(new String[] {});
   }
 
-  public boolean canCommandSenderUse(ICommandSender icommandsender) {
+  public boolean canCommandSenderUse(ICommandSender sender) {
     return true;
 }
 
@@ -43,12 +53,6 @@ private String[] params;
   }
 
 @Override
-public int compareTo(ICommand arg0) {
-	// TODO Auto-generated method stub
-	return 0;
-}
-
-@Override
 public String getUsage(ICommandSender sender) {
 	return "/nukeup <range>     - wipes all blocks xz+-"+LagFix.nukeRangeDefault+" blocks from where you are standing to up all the way.";
 }
@@ -57,13 +61,13 @@ public String getUsage(ICommandSender sender) {
 public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
     EntityPlayer player = null;
     Boolean isPlayer = false;
-    if (icommandsender instanceof EntityPlayer) { player = (EntityPlayer) icommandsender; isPlayer=true; }
+    if (sender instanceof EntityPlayer) { player = (EntityPlayer) sender; isPlayer=true; }
     Boolean isCommandBlock = false;
-    if ( icommandsender.toString().startsWith("net.minecraft.tileentity.TileEntityCommandBlock") ) { isCommandBlock = true; } // mc 1.7.2 and 1.7.10
-    //if ( (icommandsender instanceof TileEntityCommandBlock) ) { isCommandBlock = true; } // mc 1.6.4
+    if ( sender.toString().startsWith("net.minecraft.tileentity.TileEntityCommandBlock") ) { isCommandBlock = true; } // mc 1.12.2
+    //if ( (sender instanceof TileEntityCommandBlock) ) { isCommandBlock = true; } // mc 1.6.4
     if ( (! isPlayer ) && (! isCommandBlock ) ) { return; }
     if ( isPlayer && (! Do.isOp(player)) ) { Do.Say(player,"Operator only command. You are not an op."); return; }
-    World world = icommandsender.getEntityWorld();
+    World world = sender.getEntityWorld();
     if ( world.isRemote ) { return; }
     Do.Say(player, " ");
     if ((params.length > 0) && (params[0].equalsIgnoreCase("help"))) { LagFix.ShowHelp(player); return; }
@@ -77,9 +81,9 @@ public void execute(MinecraftServer server, ICommandSender sender, String[] args
   range = Math.abs(range);
   if ( range != LagFix.nukeRangeDefault ) { Do.Say(player, "Range set to xz+-" + range); }
   
-  double  px = Math.round(icommandsender.getPosition().getX() - .5); // player's coordinates rounded down
-  double  py = Math.round(icommandsender.getPosition().getY() - .5); // using icommandsender for compatibility with command blocks
-  double  pz = Math.round(icommandsender.getPosition().getZ() - .5);
+  double  px = Math.round(sender.getPosition().getX() - .5); // player's coordinates rounded down
+  double  py = Math.round(sender.getPosition().getY() - .5); // using sender for compatibility with command blocks
+  double  pz = Math.round(sender.getPosition().getZ() - .5);
   
   if ( isCommandBlock ) { py++; } // allow command blocks to not remove itself.
   
@@ -98,15 +102,17 @@ public void execute(MinecraftServer server, ICommandSender sender, String[] args
 
 @Override
 public boolean checkPermission(MinecraftServer server, ICommandSender sender) {
-	// TODO Auto-generated method stub
-	return false;
+    return true;
 }
 
 @Override
-public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args,
-		BlockPos targetPos) {
-	// TODO Auto-generated method stub
-	return null;
+@Nonnull
+public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
+    return Collections.emptyList();
 }
 
+@Override
+public int compareTo(ICommand arg0) {
+	return 0;
+}
 }

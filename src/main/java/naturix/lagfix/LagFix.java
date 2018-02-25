@@ -32,45 +32,16 @@ public class LagFix {
 	public static final String MODID = "lagfix";
 	public static final String VERSION = "1.12.2.0";
 	public static final String NAME = "LagFix";
+	public static final Integer nukeRangeDefault = 32;
+	public static final Integer animalLimitDefault = 40; // how many animals of each type are kept when limiting their population.
+	public static final Integer animalLimitMinimum = 4;  // how many animals must be kept minimum.  this command should not remove all animals.
+	public static boolean isSinglePlayer=true;
+	public static boolean isMultiPlayer=false; // actual values set in serverStart()
+
 	
 	@SidedProxy(serverSide = "naturix.lagfix.proxy.CommonProxy", clientSide = "naturix.lagfix.proxy.ClientProxy")
 	public static CommonProxy PROXY;
-  public static final Integer nukeRangeDefault = 32;
-  public static final Integer animalLimitDefault = 40; // how many animals of each type are kept when limiting their population.
-  public static final Integer animalLimitMinimum = 4;  // how many animals must be kept minimum.  this command should not remove all animals.
-  
-  public static boolean isSinglePlayer=true;
-  public static boolean isMultiPlayer=false; // actual values set in serverStart()
-
-  public static CommonProxy proxy;
-  
-  @EventHandler
-  public void serverLoad(FMLServerStartingEvent event, MinecraftServer server) {
-    ICommandManager command = server.getCommandManager();
-    ServerCommandManager manager = (ServerCommandManager) command;
     
-    manager.registerCommand(new CommandLagFix());
-    manager.registerCommand(new CommandEntityCount());
-    manager.registerCommand(new CommandNukeItems());
-    manager.registerCommand(new CommandNukeArrows());
-    manager.registerCommand(new CommandNukeMobs());
-    manager.registerCommand(new CommandLimitAnimals());       // limit animals <radius> <number 4 to any, default 50>. per type of animal.
-    manager.registerCommand(new CommandNukeNonAnimal());      // nonanimals but still entityliving
-    manager.registerCommand(new CommandNukeOther());          
-    manager.registerCommand(new CommandListOther());          // future: should dump long named version to file listother.txt
-    manager.registerCommand(new CommandNukeTileEntities());
-    manager.registerCommand(new CommandListTiles());
-    manager.registerCommand(new CommandNukeEntities());
-    manager.registerCommand(new CommandNukeUp());
-    manager.registerCommand(new CommandFillDown());
-    
-    //future:
-    //manager.registerCommand(new CommandEntityList());       // outputs to chat and a text file. EntityList.txt
-    //manager.registerCommand(new CommandEntitySearch());     // outputs to chat and to text file. EntitySearch.txt includes username and date and parameters. and summary counts.
-    //manager.registerCommand(new CommandNukeEntitySearch()); // /nukeentitysearch [<radius>] <searchterm>
-    
-  }
-  
   @EventHandler
   public void serverStart(FMLServerStartingEvent e) {
     // detect if singleplayer or multiplayer server.  there should be a better way to detect this.
@@ -81,6 +52,7 @@ public class LagFix {
       isSinglePlayer = false;
     }
     isMultiPlayer = ! isSinglePlayer;
+    
   }
   
   public static void ShowHelp(EntityPlayer player) {
@@ -95,13 +67,13 @@ public class LagFix {
     Do.Say(player, "One optional parameter specifies the radius of the area.");
     Do.Say(player, "  Its default is "+ nukeRangeDefault +". Diameter is "+(nukeRangeDefault*2+1)+" = "+nukeRangeDefault+"+1+"+nukeRangeDefault+" a "+(nukeRangeDefault*2+1)+" by "+(nukeRangeDefault*2+1)+" area");
   }
-  @EventHandler
-	public void preInit(FMLPreInitializationEvent event) {
-		PROXY.preInit(event);
-	}
 
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
 		PROXY.init(event);
 	}
+	@Mod.EventHandler
+	public void serverLoad(FMLServerStartingEvent event) {
+		PROXY.serverLoad(event);
+	 }
 }
