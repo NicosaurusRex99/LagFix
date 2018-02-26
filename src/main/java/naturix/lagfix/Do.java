@@ -218,21 +218,17 @@ public class Do {
    * Returns true if the player is an op (operator). With a custom exception that if the SpawnCommands misc config setting "allow With Cheats Disabled" is true (the default) then in single player it also returns true, as if the player is an op despite the "no cheats allowed" option at game creation.
    * @param player
    */
-    public static boolean isOp(ICommandSender sender)
-    {
-        if (FMLCommonHandler.instance().getMinecraftServerInstance() != null
-                && !FMLCommonHandler.instance().getMinecraftServerInstance().isDedicatedServer()) { return true; }
-
-        if (sender instanceof EntityPlayer)
-        {
-            EntityPlayer player = sender.getEntityWorld().getPlayerEntityByName(sender.getName());
-            UserListOpsEntry userentry = ((EntityPlayerMP) player).mcServer.getPlayerList().getOppedPlayers()
-                    .getEntry(player.getGameProfile());
-            return userentry != null && userentry.getPermissionLevel() >= 4;
-        }
-        else if (sender instanceof TileEntityCommandBlock) { return true; }
-        return sender.getName().equalsIgnoreCase("@") || sender.getName().equals("Server");
-    }
+    public static boolean isOp(EntityPlayer player) {
+        // test if "cheats enabled: on" and is in single player then consider the player an op
+        if ( ((EntityPlayerMP)player).mcServer.isSinglePlayer() && player.canUseCommand(2,"gamemode") ) { return true; }
+        // mc1.8.9 && MinecraftServer.getServer().getConfigurationManager().canSendCommands(player.getGameProfile()) ) { return true; }
+        // actual test for op:
+        return hasItemInArray(player.getName(), ((EntityPlayerMP)player).mcServer.getPlayerList().getOppedPlayerNames()); // mc1.9, mc1.10
+        //return hasItemInArray(player.getName(),MinecraftServer.getServer().getConfigurationManager().getOppedPlayerNames()); // mc1.8 and mc1.8.9
+        //return MinecraftServer.getServer().getConfigurationManager().func_152596_g(player.getGameProfile()); // mc1.7.10
+        //return MinecraftServer.getServer().getConfigurationManager().isPlayerOpped(player.getGameProfile().getName()); // mc 1.7.2 ???
+        //return MinecraftServer.getServerConfigurationManager(MinecraftServer.getServer()).isPlayerOpped(player.username); // mc 1.6.4
+      }
   
   /**Returns true if it exists and it is a folder. 
    * @param filePathAndName

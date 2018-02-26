@@ -74,9 +74,6 @@ public void execute(MinecraftServer server, ICommandSender sender, String[] args
     
     
   int range = Config.nukeRangeDefault; // arbitrary square distance to cover
-  if ( params.length == 1) { 
-    try { range = Integer.parseInt(params[0]); } catch (NumberFormatException e) { LagFix.ShowHelp(player); return; }
-  }
   range = Math.abs(range);
   if ( range != LagFix.nukeRangeDefault ) { Do.Say(player, "Range set to xz+-" + range); }
   
@@ -101,7 +98,7 @@ public void execute(MinecraftServer server, ICommandSender sender, String[] args
 
 @Override
 public boolean checkPermission(MinecraftServer server, ICommandSender sender) {
-    return true;
+    return sender.canUseCommand(2,"gamemode");
 }
 
 @Override

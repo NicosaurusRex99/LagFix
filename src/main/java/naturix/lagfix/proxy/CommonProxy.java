@@ -36,6 +36,9 @@ public class CommonProxy {
     public void serverLoad(FMLServerStartingEvent event) {
         event.registerServerCommand(new CommandNukeUp());
         event.registerServerCommand(new CommandEntityCount());
+        event.registerServerCommand(new CommandLagFix());
+        event.registerServerCommand(new CommandLimitAnimals());
+        event.registerServerCommand(new CommandFillDown());
         System.out.print(LagFix.NAME + " commands have loaded!");
     }
     }
