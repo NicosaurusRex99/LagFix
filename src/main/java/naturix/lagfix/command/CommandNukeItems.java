@@ -87,7 +87,7 @@ public void execute(MinecraftServer server, ICommandSender sender, String[] args
     } // end if not player
   } // end for k
   
-  Do.Say(player, itcount + " Entity§eItem§rs removed in range +-"+range);
+  Do.Say(player, itcount + " Entity Items removed in range +-"+range);
 }
 @Override
 public boolean checkPermission(MinecraftServer server, ICommandSender sender) {
