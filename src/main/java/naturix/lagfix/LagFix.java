@@ -18,7 +18,7 @@ public class LagFix {
 	public static final String VERSION = "1.12.2.0";
 	public static final String NAME = "LagFix";
 	public static final Integer nukeRangeDefault = Config.nukeRangeDefault;
-	public static final Integer animalLimitDefault = 40; // how many animals of each type are kept when limiting their population.
+	public static final Integer animalLimitDefault = Config.animalLimitDefault; // how many animals of each type are kept when limiting their population.
 	public static final Integer animalLimitMinimum = Config.animalLimitMinimum;  // how many animals must be kept minimum.  this command should not remove all animals.
 	public static boolean isSinglePlayer=true;
 	public static boolean isMultiPlayer=false; // actual values set in serverStart()

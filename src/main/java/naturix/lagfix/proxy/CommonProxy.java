@@ -39,6 +39,8 @@ public class CommonProxy {
         event.registerServerCommand(new CommandLagFix());
         event.registerServerCommand(new CommandLimitAnimals());
         event.registerServerCommand(new CommandFillDown());
-        System.out.print(LagFix.NAME + " commands have loaded!");
+        event.registerServerCommand(new CommandListOther());
+        event.registerServerCommand(new CommandListTiles());
+        LagFix.logger.info(LagFix.NAME  + " commands have loaded!");
     }
     }

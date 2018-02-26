@@ -11,6 +11,7 @@ public class Config {
 
     public static int nukeRangeDefault = 32;
     public static int animalLimitMinimum = 4;
+    public static int animalLimitDefault = 40;
 
     public static void readConfig() {
         Configuration cfg = CommonProxy.config;
@@ -30,6 +31,8 @@ public class Config {
         cfg.addCustomCategoryComment(CATEGORY_GENERAL, "General configuration");
         nukeRangeDefault = cfg.getInt("nukeRangeDefault", CATEGORY_GENERAL, 32, 1, 256, "Amount of blocks /nukeup will remove");
         animalLimitMinimum = cfg.getInt("animalLimitMinimum", CATEGORY_GENERAL, 3, 1, 256, "Minimum amount of animals in loaded chunks");    
+        animalLimitDefault = cfg.getInt("animalLimitDefault", CATEGORY_GENERAL, 40, 1, 256, "Default amount of animals in loaded chunks");    
+        
     }
 
 }
