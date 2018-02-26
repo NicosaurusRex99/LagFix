@@ -41,6 +41,7 @@ public class CommonProxy {
         event.registerServerCommand(new CommandFillDown());
         event.registerServerCommand(new CommandListOther());
         event.registerServerCommand(new CommandListTiles());
+        event.registerServerCommand(new CommandNukeArrows());
         LagFix.logger.info(LagFix.NAME  + " commands have loaded!");
     }
     }
