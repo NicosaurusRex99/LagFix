@@ -72,7 +72,7 @@ Only needed on server side for multiplayer servers.
 
 Source code is included.
 
-This is a Forge mod. No Bukkit is needed.
+This is a Forge mod. No Bukkit not is needed.
 
 The commands are simple.
 
