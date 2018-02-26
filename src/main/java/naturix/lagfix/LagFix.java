@@ -1,25 +1,10 @@
 package naturix.lagfix;
 
-import naturix.lagfix.command.CommandEntityCount;
-import naturix.lagfix.command.CommandFillDown;
-import naturix.lagfix.command.CommandLagFix;
-import naturix.lagfix.command.CommandLimitAnimals;
-import naturix.lagfix.command.CommandListOther;
-import naturix.lagfix.command.CommandListTiles;
-import naturix.lagfix.command.CommandNukeArrows;
-import naturix.lagfix.command.CommandNukeEntities;
-import naturix.lagfix.command.CommandNukeItems;
-import naturix.lagfix.command.CommandNukeMobs;
-import naturix.lagfix.command.CommandNukeNonAnimal;
-import naturix.lagfix.command.CommandNukeOther;
-import naturix.lagfix.command.CommandNukeTileEntities;
-import naturix.lagfix.command.CommandNukeUp;
+import org.apache.logging.log4j.core.Logger;
+
 import naturix.lagfix.proxy.CommonProxy;
 import net.minecraft.client.Minecraft;
-import net.minecraft.command.ICommandManager;
-import net.minecraft.command.ServerCommandManager;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -41,6 +26,7 @@ public class LagFix {
 	
 	@SidedProxy(serverSide = "naturix.lagfix.proxy.CommonProxy", clientSide = "naturix.lagfix.proxy.ClientProxy")
 	public static CommonProxy PROXY;
+	public static org.apache.logging.log4j.Logger logger;
     
   @EventHandler
   public void serverStart(FMLServerStartingEvent e) {
@@ -68,6 +54,11 @@ public class LagFix {
     Do.Say(player, "  Its default is "+ nukeRangeDefault +". Diameter is "+(nukeRangeDefault*2+1)+" = "+nukeRangeDefault+"+1+"+nukeRangeDefault+" a "+(nukeRangeDefault*2+1)+" by "+(nukeRangeDefault*2+1)+" area");
   }
 
+  	@EventHandler
+  	public void preInit(FMLPreInitializationEvent event) {
+  		logger = event.getModLog();
+  	}
+  
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
 		PROXY.init(event);

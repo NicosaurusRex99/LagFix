@@ -1,14 +1,15 @@
 package naturix.lagfix.command;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.google.common.collect.Lists;
 
-import java.util.Collections;
-
+import naturix.lagfix.Config;
 import naturix.lagfix.Do;
 import naturix.lagfix.LagFix;
 import net.minecraft.command.CommandException;
@@ -70,11 +71,9 @@ public void execute(MinecraftServer server, ICommandSender sender, String[] args
     World world = sender.getEntityWorld();
     if ( world.isRemote ) { return; }
     Do.Say(player, " ");
-    if ((params.length > 0) && (params[0].equalsIgnoreCase("help"))) { LagFix.ShowHelp(player); return; }
-    if  (params.length > 1) { LagFix.ShowHelp(player); return; }
-    Do.Say(player, " ");
     
-  int range = LagFix.nukeRangeDefault; // arbitrary square distance to cover
+    
+  int range = Config.nukeRangeDefault; // arbitrary square distance to cover
   if ( params.length == 1) { 
     try { range = Integer.parseInt(params[0]); } catch (NumberFormatException e) { LagFix.ShowHelp(player); return; }
   }
