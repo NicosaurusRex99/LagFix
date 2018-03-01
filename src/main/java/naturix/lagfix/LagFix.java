@@ -15,8 +15,8 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 @Mod(modid = LagFix.MODID, version = LagFix.VERSION, name = LagFix.NAME)
 public class LagFix {
 	public static final String MODID = "lagfix";
-	public static final String VERSION = "1.12.2.0";
-	public static final String NAME = "LagFix";
+	public static final String VERSION = "3.0";
+	public static final String NAME = "Entity LagFix / Lag Fix";
 	public static final Integer nukeRangeDefault = Config.nukeRangeDefault;
 	public static final Integer animalLimitDefault = Config.animalLimitDefault; // how many animals of each type are kept when limiting their population.
 	public static final Integer animalLimitMinimum = Config.animalLimitMinimum;  // how many animals must be kept minimum.  this command should not remove all animals.
