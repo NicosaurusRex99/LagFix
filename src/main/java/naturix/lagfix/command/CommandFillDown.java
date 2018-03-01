@@ -86,7 +86,8 @@ public class CommandFillDown implements ICommand {
             if ( (yy >= -3) && (yy < -1) ) { replacementBlockID = Blocks.DIRT; }
             if ( yy == -1 ) { replacementBlockID = Blocks.GRASS; }
             if ( yy+py < 1 ) { replacementBlockID = Blocks.BEDROCK; }
-            
+
+
             BlockPos pos = new BlockPos((int)(xx+px), (int)(yy+py), (int)(zz+pz));
             TileEntity theTileEntity = world.getTileEntity(pos);
             if ( theTileEntity != null ) { theTileEntity.invalidate(); world.getChunkFromChunkCoords((int)(xx+px),(int)(zz+pz)).removeInvalidTileEntity(pos); } // mc 1.8 // prevents dropping contents on ground when block is destroyed.
@@ -94,6 +95,7 @@ public class CommandFillDown implements ICommand {
             
             world.setBlockState(pos, Blocks.AIR.getDefaultState()); // it used to be necessary to hit it with AIR then the next one. not sure if this is needed any more.
             world.setBlockState(pos, replacementBlockID.getDefaultState());
+            
             // DEBUG what about the update parameters used in 1.7.10?
             //world.setBlock((int)(xx+px), (int)(yy+py), (int)(zz+pz), Blocks.AIR, 0, 3); // mc1.7.10 // MUST set to AIR before setting to other block. Some blocks trigger a ClassCastException error when replaced with other blocks (a Minecraft "feature").
             //world.setBlock((int)(xx+px), (int)(yy+py), (int)(zz+pz), replacementBlockID, 0, 3); // mc1.7.10 // X, Y, Z, new block ID, new metadata, flag 2

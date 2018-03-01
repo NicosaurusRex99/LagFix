@@ -59,7 +59,7 @@ public String getUsage(ICommandSender sender) {
 }
 
 @Override
-public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] params) throws CommandException {
     EntityPlayer player = null;
     Boolean isPlayer = false;
     if (sender instanceof EntityPlayer) { player = (EntityPlayer) sender; isPlayer=true; }
@@ -72,10 +72,10 @@ public void execute(MinecraftServer server, ICommandSender sender, String[] args
     if ( world.isRemote ) { return; }
     Do.Say(player, " ");
     
-    
+  int extra = this.parseInteger(params[0]);
   int range = Config.nukeRangeDefault; // arbitrary square distance to cover
-  range = Math.abs(range + Config.nukeRangeDefault);
-  if ( range != LagFix.nukeRangeDefault ) { Do.Say(player, "Range set to xz+-" + range); }
+  range = Math.abs(extra);
+  if ( range != Config.nukeRangeDefault ) { Do.Say(player, "Range set to xz+-" + range); }
   
   double  px = Math.round(sender.getPosition().getX() - .5); // player's coordinates rounded down
   double  py = Math.round(sender.getPosition().getY() - .5); // using sender for compatibility with command blocks
@@ -110,5 +110,21 @@ public List<String> getTabCompletions(MinecraftServer server, ICommandSender sen
 @Override
 public int compareTo(ICommand arg0) {
 	return 0;
+}
+public static int parseInteger(String string)
+{
+	int value;
+	try
+	{
+		value = Integer.parseInt(string);
+	}
+	catch (NumberFormatException e)
+	{
+		e.printStackTrace();
+		return LagFix.nukeRangeDefault;
+		
+	}
+
+	return value;
 }
 }
