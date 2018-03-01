@@ -74,7 +74,7 @@ public void execute(MinecraftServer server, ICommandSender sender, String[] args
     
     
   int range = Config.nukeRangeDefault; // arbitrary square distance to cover
-  range = Math.abs(range);
+  range = Math.abs(range + Config.nukeRangeDefault);
   if ( range != LagFix.nukeRangeDefault ) { Do.Say(player, "Range set to xz+-" + range); }
   
   double  px = Math.round(sender.getPosition().getX() - .5); // player's coordinates rounded down

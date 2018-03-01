@@ -53,6 +53,7 @@ public class CommandFillDown implements ICommand {
 
 	@Override
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+		System.out.print(sender + " used /filldown");
 		EntityPlayer player = null;
 	    Boolean isPlayer = false;
 	    if (player instanceof EntityPlayer) { player = (EntityPlayer) player; isPlayer=true; }
