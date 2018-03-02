@@ -21,7 +21,7 @@ import net.minecraft.world.World;
 public class CommandFillDown implements ICommand {
 
   private int extra;
-
+  private int range;
 @Override
   public String getName() {
     return "filldown";
@@ -67,18 +67,18 @@ public class CommandFillDown implements ICommand {
 	    World world = sender.getEntityWorld();
 	    if ( world.isRemote ) { return; }
 	    Do.Say(player, " ");
-	    if (args.length > 0) {
-	        try {
-	            extra = Integer.parseInt(args[0]);
-	        } catch (NumberFormatException e) {
-	            System.err.println("Argument" + args[0] + " must be an integer.");
-	            System.exit(1);
-	        }
+	    
+	    if (args.length == 0) {
+	    	  range = LagFix.nukeRangeDefault;
+	    	  if ( range != Config.nukeRangeDefault ) { Do.Say(player, "Range set to xz+-" + range); 
+	    	  }
 	    }
-	  int range = Config.nukeRangeDefault; // arbitrary square distance to cover
-	  range = Math.abs(range);
-	  if ( range != Config.nukeRangeDefault ) { Do.Say(player, "Range set to xz+-" + range); }
-	  
+	    if (args.length >= 1) {
+	  	  range = Integer.parseInt(args[0]);;
+	  	  if ( range != Config.nukeRangeDefault ) { Do.Say(player, "Range set to xz+-" + range); 
+	  	  }	  
+	  }
+	    range = Math.abs(range);
       double  px = Math.round(player.getPosition().getX() - .5); // player's coordinates rounded down
       double  py = Math.round(player.getPosition().getY() - .5); // using icommandsender for compatibility with command blocks
       double  pz = Math.round(player.getPosition().getZ() - .5);
