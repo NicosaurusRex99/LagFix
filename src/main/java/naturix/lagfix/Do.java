@@ -1,4 +1,4 @@
-package naturix.lagfix;
+package aln.LagFix;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -11,13 +11,9 @@ import java.io.UnsupportedEncodingException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.server.management.UserListOpsEntry;
-import net.minecraft.tileentity.TileEntityCommandBlock;
-import net.minecraft.util.text.TextComponentString;
-import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.ChatComponentText;
 
 /**
  * @author Andre L Noel
@@ -157,7 +153,7 @@ public class Do {
    * @param s
    */
   public static void Err(EntityPlayer player, String s) {
-    Say(player,"ERROR [" + LagFix.MODID + "] " + s);
+    Say(player,"ERROR [" + ModInfo.ID + "] " + s);
     Err(s);
     return;
   }
@@ -167,7 +163,7 @@ public class Do {
    * @param s
    */
   public static void Err(String s) {
-    System.err.println("ERROR [" + LagFix.MODID + "] " + s);
+    System.err.println("ERROR [" + ModInfo.ID + "] " + s);
     return;
   }
   
@@ -188,7 +184,7 @@ public class Do {
    */
   public static void Trace(EntityPlayer player, String s) {
     if (!tracing) { return; }
-    Say(player,"TRACE [" + LagFix.NAME + "] " + s);
+    Say(player,"TRACE [" + ModInfo.NAME + "] " + s);
     Trace(s);
   }
   
@@ -198,7 +194,7 @@ public class Do {
    */
   public static void Trace(String s) {
     if (!tracing) { return; }
-    System.out.println("TRACE [" + LagFix.MODID + "] " + s);
+    System.out.println("TRACE [" + ModInfo.ID + "] " + s);
     //System.err.println("TRACE [" + ModInfo.ID + "] " + s); // using the standard error output because it shows up in red in my console *grin*
   }
   
@@ -209,7 +205,7 @@ public class Do {
    */
     public static void Say(EntityPlayer player, String s) { 
       if (player != null) { 
-        player.sendMessage(new TextComponentString(s)); // mc1.7.10 and mc1.7.2 and mc1.8
+        player.addChatComponentMessage(new ChatComponentText(s)); // mc1.7.10 and mc1.7.2 and mc1.8
         //player.addChatMessage(s); // mc1.6.4
       } 
     }
@@ -218,17 +214,13 @@ public class Do {
    * Returns true if the player is an op (operator). With a custom exception that if the SpawnCommands misc config setting "allow With Cheats Disabled" is true (the default) then in single player it also returns true, as if the player is an op despite the "no cheats allowed" option at game creation.
    * @param player
    */
-    public static boolean isOp(EntityPlayer player) {
-        // test if "cheats enabled: on" and is in single player then consider the player an op
-        if ( ((EntityPlayerMP)player).mcServer.isSinglePlayer() && player.canUseCommand(2,"gamemode") ) { return true; }
-        // mc1.8.9 && MinecraftServer.getServer().getConfigurationManager().canSendCommands(player.getGameProfile()) ) { return true; }
-        // actual test for op:
-        return hasItemInArray(player.getName(), ((EntityPlayerMP)player).mcServer.getPlayerList().getOppedPlayerNames()); // mc1.9, mc1.10
-        //return hasItemInArray(player.getName(),MinecraftServer.getServer().getConfigurationManager().getOppedPlayerNames()); // mc1.8 and mc1.8.9
-        //return MinecraftServer.getServer().getConfigurationManager().func_152596_g(player.getGameProfile()); // mc1.7.10
-        //return MinecraftServer.getServer().getConfigurationManager().isPlayerOpped(player.getGameProfile().getName()); // mc 1.7.2 ???
-        //return MinecraftServer.getServerConfigurationManager(MinecraftServer.getServer()).isPlayerOpped(player.username); // mc 1.6.4
-      }
+  public static boolean IsOp(EntityPlayer player) {
+    if ( LagFix.isSinglePlayer ) { return true; } // this line custom for LagFix2.0.1+ for mc1.8 // always allow single player to use this tool
+    return hasItemInArray(player.getName(),MinecraftServer.getServer().getConfigurationManager().getOppedPlayerNames()); // mc1.8
+    //return MinecraftServer.getServer().getConfigurationManager().func_152596_g(player.getGameProfile()); // mc1.7.10
+    //return MinecraftServer.getServer().getConfigurationManager().isPlayerOpped(player.getDisplayName()); // mc 1.7.2???
+  	//return MinecraftServer.getServerConfigurationManager(MinecraftServer.getServer()).isPlayerOpped(player.username); // mc 1.6.4
+  }
   
   /**Returns true if it exists and it is a folder. 
    * @param filePathAndName
