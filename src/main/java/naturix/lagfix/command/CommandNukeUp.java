@@ -27,6 +27,7 @@ public class CommandNukeUp implements ICommand {
 private String[] params;
 private final List<String> aliases;
 private int extra;
+private int range;
 	public CommandNukeUp(){
     aliases = Lists.newArrayList(LagFix.MODID, "nu");
 }
@@ -73,24 +74,23 @@ public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sen
     if ( world.isRemote ) { return; }
     Do.Say(player, " ");
     
-    if (params.length > 0) {
-        try {
-            extra = Integer.parseInt(params[0]);
-        } catch (NumberFormatException e) {
-            System.err.println("Argument" + params[0] + " must be an integer.");
-            System.exit(1);
-        }
+    if (params.length == 0) {
+    	  range = LagFix.nukeRangeDefault;
+    	  if ( range != Config.nukeRangeDefault ) { Do.Say(player, "Range set to xz+-" + range); 
+    	  }
     }
-  int range = Config.nukeRangeDefault; // arbitrary square distance to cover
-  range = Math.abs(range);
-  if ( range != Config.nukeRangeDefault ) { Do.Say(player, "Range set to xz+-" + range); }
-  
+    if (params.length >= 1) {
+  	  range = Integer.parseInt(params[0]);;
+  	  if ( range != Config.nukeRangeDefault ) { Do.Say(player, "Range set to xz+-" + range); 
+  	  }	  
+  }
+    range = Math.abs(range);
   double  px = Math.round(sender.getPosition().getX() - .5); // player's coordinates rounded down
   double  py = Math.round(sender.getPosition().getY() - .5); // using sender for compatibility with command blocks
   double  pz = Math.round(sender.getPosition().getZ() - .5);
   
   if ( isCommandBlock ) { py++; } // allow command blocks to not remove itself.
-  
+ 
   Do.Say(player, "Working...");
   if (range != Config.nukeRangeDefault) {
   for(int yy=world.getActualHeight(); yy >= 0 ; yy--) { // top down, falling blocks...
@@ -99,15 +99,13 @@ public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sen
         world.setBlockState(new BlockPos((int)(xx+px), (int)(yy+py), (int)(zz+pz)), Blocks.AIR.getDefaultState()); // mc1.8 ?? what about the update flag?
         //world.setBlock((int)(xx+px), (int)(yy+py), (int)(zz+pz), Blocks.air, 0, 2); // mc1.7.10 // X, Y, Z, new block ID, new metadata, flag 2.
       }}}}
-  	if (range == Config.nukeRangeDefault) 
-  	{ 
-  		Do.Say(player, "Range set to xz+-" + extra);
-  		for(int yy=world.getActualHeight(); yy >= 0 ; yy--) { // top down, falling blocks...
-  		    for(int xx= -(extra); xx<=extra; xx++) {
-  		      for(int zz= -(extra); zz<=extra; zz++) {
-  		        world.setBlockState(new BlockPos((int)(xx+px), (int)(yy+py), (int)(zz+pz)), Blocks.AIR.getDefaultState()); // mc1.8 ?? what about the update flag?
-  		        //world.setBlock((int)(xx+px), (int)(yy+py), (int)(zz+pz), Blocks.air, 0, 2); // mc1.7.10 // X, Y, Z, new block ID, new metadata, flag 2.
-  		      }}}}
+  if (range == Config.nukeRangeDefault) {
+	  for(int yy=world.getActualHeight(); yy >= 0 ; yy--) { // top down, falling blocks...
+	    for(int xx= -(range); xx<=range; xx++) {
+	      for(int zz= -(range); zz<=range; zz++) {
+	        world.setBlockState(new BlockPos((int)(xx+px), (int)(yy+py), (int)(zz+pz)), Blocks.AIR.getDefaultState()); // mc1.8 ?? what about the update flag?
+	        //world.setBlock((int)(xx+px), (int)(yy+py), (int)(zz+pz), Blocks.air, 0, 2); // mc1.7.10 // X, Y, Z, new block ID, new metadata, flag 2.
+	      }}}}
   	
   Do.Say(player, "Removed blocks from here, y"+(int)py+", out +-"+range+",");
   Do.Say(player, "  all the way up to y"+world.getActualHeight()+".");
