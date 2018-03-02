@@ -20,7 +20,7 @@ import net.minecraft.world.World;
 
 public class CommandLimitAnimals implements ICommand {
 
-  private String[] params;
+  private String[] args;
 
 @Override
   public String getName() {
@@ -70,17 +70,17 @@ public void execute(MinecraftServer server, ICommandSender sender, String[] args
     Do.Say(player, " ");
     
     int nLimit = LagFix.animalLimitDefault; // default animal limit for each type. 50 sheep and 50 cows and 50 chickens etc.
-    if (params.length > 2) {
-      try { nLimit = Integer.parseInt(params[1]); } catch (NumberFormatException e) { Do.Say(player,"Parameters are <range> and <limit>. The limit is the number of EntityAnimals to keep of each type."); return; }
+    if (args.length > 2) {
+      try { nLimit = Integer.parseInt(args[1]); } catch (NumberFormatException e) { Do.Say(player,"Parameters are <range> and <limit>. The limit is the number of EntityAnimals to keep of each type."); return; }
       if (nLimit < LagFix.animalLimitMinimum) { 
         nLimit = LagFix.animalLimitMinimum;
         Do.Say(player,"Limit changed to the minimum."); }
     }
-    Do.Say(player,"Animal limit is §e"+ nLimit +" per type§r.");
+    Do.Say(player,"Animal limit is "+ nLimit +" per type.");
     
     int range = LagFix.nukeRangeDefault; // arbitrary square distance to cover
-    if ( params.length > 0 ) {
-      try { range = Integer.parseInt(params[0]); } catch (NumberFormatException e) { Do.Say(player,"Parameters are <range> and <limit>. Range is the number of blocks out from your standing location in all directions that will be affected."); return; }
+    if ( args.length > 0 ) {
+      try { range = Integer.parseInt(args[0]); } catch (NumberFormatException e) { Do.Say(player,"Parameters are <range> and <limit>. Range is the number of blocks out from your standing location in all directions that will be affected."); return; }
     }
     range = Math.abs(range);
     if ( range != LagFix.nukeRangeDefault ) { Do.Say(player, "Range set to xz+-" + range); }
@@ -167,7 +167,7 @@ public void execute(MinecraftServer server, ICommandSender sender, String[] args
       } // end if not player
     } // end for k
     
-    Do.Say(player, "§e"+ killCount + "§r EntityAnimals removed in range +-"+range);
+    Do.Say(player, killCount + " EntityAnimals removed in range +-"+range);
 }
 
 @Override
