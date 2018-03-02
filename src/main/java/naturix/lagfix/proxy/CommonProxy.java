@@ -18,6 +18,7 @@ import naturix.lagfix.command.CommandNukeNonAnimal;
 import naturix.lagfix.command.CommandNukeOther;
 import naturix.lagfix.command.CommandNukeTileEntities;
 import naturix.lagfix.command.CommandNukeUp;
+import naturix.lagfix.command.CommandTPS;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -62,7 +63,7 @@ public class CommonProxy {
         event.registerServerCommand(new CommandNukeNonAnimal());
         event.registerServerCommand(new CommandNukeOther());
         event.registerServerCommand(new CommandNukeTileEntities());
-
+        event.registerServerCommand(new CommandTPS());
         LagFix.logger.info(LagFix.NAME  + " commands have loaded!");
     }
     }
