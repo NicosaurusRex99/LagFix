@@ -9,6 +9,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 
@@ -24,8 +25,8 @@ public class LagFix {
 	public static boolean isMultiPlayer=false; // actual values set in serverStart()
 
 	
-	@SidedProxy(serverSide = "naturix.lagfix.proxy.CommonProxy", clientSide = "naturix.lagfix.proxy.ClientProxy")
-	public static CommonProxy PROXY;
+	@SidedProxy(clientSide = "naturix.lagfix.proxy.ClientProxy", serverSide = "naturix.lagfix.proxy.ServerProxy")
+    public static CommonProxy proxy;
 	public static org.apache.logging.log4j.Logger logger;
     
   @EventHandler
@@ -55,16 +56,21 @@ public class LagFix {
   }
 
   	@EventHandler
-  	public void preInit(FMLPreInitializationEvent event) {
-  		logger = event.getModLog();
+  	public void preInit(FMLPreInitializationEvent e) {
+  		logger = e.getModLog();
+  		proxy.preInit(e);
   	}
   
-	@EventHandler
-	public void init(FMLInitializationEvent event) {
-		PROXY.init(event);
+  	@EventHandler
+	public void init(FMLInitializationEvent e) {
+		proxy.init(e);
+	}
+  	@EventHandler
+	public void postInit(FMLPostInitializationEvent e) {
+		proxy.postInit(e);
 	}
 	@Mod.EventHandler
-	public void serverLoad(FMLServerStartingEvent event) {
-		PROXY.serverLoad(event);
+	public void serverLoad(FMLServerStartingEvent e) {
+		proxy.serverLoad(e);
 	 }
 }

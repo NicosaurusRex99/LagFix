@@ -4,7 +4,20 @@ import java.io.File;
 
 import naturix.lagfix.Config;
 import naturix.lagfix.LagFix;
-import naturix.lagfix.command.*;
+import naturix.lagfix.command.CommandEntityCount;
+import naturix.lagfix.command.CommandFillDown;
+import naturix.lagfix.command.CommandLagFix;
+import naturix.lagfix.command.CommandLimitAnimals;
+import naturix.lagfix.command.CommandListOther;
+import naturix.lagfix.command.CommandListTiles;
+import naturix.lagfix.command.CommandNukeArrows;
+import naturix.lagfix.command.CommandNukeEntities;
+import naturix.lagfix.command.CommandNukeItems;
+import naturix.lagfix.command.CommandNukeMobs;
+import naturix.lagfix.command.CommandNukeNonAnimal;
+import naturix.lagfix.command.CommandNukeOther;
+import naturix.lagfix.command.CommandNukeTileEntities;
+import naturix.lagfix.command.CommandNukeUp;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -16,9 +29,10 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 public class CommonProxy {
 	
 	public static Configuration config;
-	
-    public void preInit(FMLPreInitializationEvent e) {
-    	File directory = e.getModConfigurationDirectory();
+
+	public void preInit(FMLPreInitializationEvent e) 
+	{
+		File directory = e.getModConfigurationDirectory();
         config = new Configuration(new File(directory.getPath(), "naturix/lagfix.cfg"));
         Config.readConfig();
     }
