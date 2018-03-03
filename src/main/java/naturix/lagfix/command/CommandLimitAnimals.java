@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import naturix.lagfix.Config;
 import naturix.lagfix.Do;
 import naturix.lagfix.LagFix;
 import net.minecraft.command.CommandException;
@@ -21,6 +22,7 @@ import net.minecraft.world.World;
 public class CommandLimitAnimals implements ICommand {
 
   private String[] args;
+private Integer range;
 
 @Override
   public String getName() {
@@ -77,14 +79,18 @@ public void execute(MinecraftServer server, ICommandSender sender, String[] args
         Do.Say(player,"Limit changed to the minimum."); }
     }
     Do.Say(player,"Animal limit is "+ nLimit +" per type.");
-    
-    int range = LagFix.nukeRangeDefault; // arbitrary square distance to cover
-    if ( args.length > 0 ) {
-      try { range = Integer.parseInt(args[0]); } catch (NumberFormatException e) { Do.Say(player,"Parameters are <range> and <limit>. Range is the number of blocks out from your standing location in all directions that will be affected."); return; }
+    if (args.length == 0) {
+    	  range = LagFix.nukeRangeDefault;
+    	  if ( range != Config.nukeRangeDefault ) { Do.Say(player, "Range set to xz+-" + range); 
+    	  }
     }
+    if (args.length >= 1) {
+  	  range = Integer.parseInt(args[0]);;
+  	  if ( range != Config.nukeRangeDefault ) { Do.Say(player, "Range set to xz+-" + range); 
+  	  }	  
+  }
     range = Math.abs(range);
-    if ( range != LagFix.nukeRangeDefault ) { Do.Say(player, "Range set to xz+-" + range); }
-    
+
     double  px = Math.round(sender.getPosition().getX() - .5); // player's coordinates rounded down
     double  py = Math.round(sender.getPosition().getY() - .5);
     double  pz = Math.round(sender.getPosition().getZ() - .5);

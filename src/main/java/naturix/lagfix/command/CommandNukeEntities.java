@@ -3,6 +3,7 @@ package naturix.lagfix.command;
 import java.util.Arrays;
 import java.util.List;
 
+import naturix.lagfix.Config;
 import naturix.lagfix.Do;
 import naturix.lagfix.LagFix;
 import net.minecraft.command.CommandException;
@@ -18,7 +19,9 @@ import net.minecraft.world.World;
 public class CommandNukeEntities implements ICommand {
 
 
-  @Override
+  private Integer range;
+
+@Override
   public String getName() {
     return "nukeentities";
   }
@@ -63,12 +66,18 @@ public void execute(MinecraftServer server, ICommandSender sender, String[] args
     if ( isPlayer && (! Do.isOp(player)) ) { Do.Say(player,"Operator only command. You are not an op."); return; }
     World world = sender.getEntityWorld();
     if ( world.isRemote ) { return; }
- 
-  int range = LagFix.nukeRangeDefault; // arbitrary square distance to cover
+    if (args.length == 0) {
+    	  range = LagFix.nukeRangeDefault;
+    	  if ( range != Config.nukeRangeDefault ) { Do.Say(player, "Range set to xz+-" + range); 
+    	  }
+    }
+    if (args.length >= 1) {
+  	  range = Integer.parseInt(args[0]);;
+  	  if ( range != Config.nukeRangeDefault ) { Do.Say(player, "Range set to xz+-" + range); 
+  	  }	  
+  }
+    range = Math.abs(range);
 
-  range = Math.abs(range);
-  if ( range != LagFix.nukeRangeDefault ) { Do.Say(player, "Range set to xz+-" + range); }
-  
   double  px = Math.round(sender.getPosition().getX() - .5); // player's coordinates rounded down
   double  py = Math.round(sender.getPosition().getY() - .5); // using sender for compatibility with command blocks
   double  pz = Math.round(sender.getPosition().getZ() - .5);
