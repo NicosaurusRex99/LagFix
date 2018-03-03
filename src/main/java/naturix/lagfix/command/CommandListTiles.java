@@ -164,9 +164,11 @@ public void execute(MinecraftServer server, ICommandSender sender, String[] args
       pattern = Pattern.compile("(.+)\\([xX]=[^\\)]*\\)$");
       matcher = pattern.matcher(tileTypeArray[i]);
       if ( matcher.find() ) { shortName = matcher.group(1); } // remove coordinates from name, used by a mod in dw20for1710
-      
-      if ( tileTypeCountArray[i] > 0 ) {  // flooded with coordinate names and zero counts in direwolf20 for 1.7.10 pack.  do not display zero counts.
-        tempOutput += shortName +"("+ tileTypeCountArray[i] +")"; 
+      if ( tileTypeCountArray[i] == 1 ) {  // flooded with coordinate names and zero counts in direwolf20 for 1.7.10 pack.  do not display zero counts.
+          tempOutput += shortName +"("+ tileTypeCountArray[i] +"). "; 
+        }
+      if ( tileTypeCountArray[i] > 2 ) {  // flooded with coordinate names and zero counts in direwolf20 for 1.7.10 pack.  do not display zero counts.
+        tempOutput += shortName +"("+ tileTypeCountArray[i] +"), "; 
       }
     }
     if (tempOutput.length() > 32000 ) { tempOutput = "[truncated]"+ tempOutput.substring(tempOutput.length() - 32000 ); } // prevent netty io error and client side crash.
