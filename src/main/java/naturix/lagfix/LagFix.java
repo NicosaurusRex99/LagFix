@@ -51,7 +51,7 @@ public class LagFix {
     Do.Say(player, "  /nukeentities or /nukeents to remove all entities in range");
     Do.Say(player, "  /listtiles /nuketileentities or /nuketiles in range");
     Do.Say(player, "  /nukeup /filldown affects all blocks in range");
-    Do.Say(player, " /tps will display the current tps");
+    //Do.Say(player, " /tps will display the current tps");
     Do.Say(player, "One optional parameter specifies the radius of the area.");
     Do.Say(player, "  Its default is "+ nukeRangeDefault +". Diameter is "+(nukeRangeDefault*2+1)+" = "+nukeRangeDefault+"+1+"+nukeRangeDefault+" a "+(nukeRangeDefault*2+1)+" by "+(nukeRangeDefault*2+1)+" area");
     }
