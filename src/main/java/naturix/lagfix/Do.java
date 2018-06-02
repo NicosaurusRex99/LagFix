@@ -157,7 +157,7 @@ public class Do {
    * @param s
    */
   public static void Err(EntityPlayer player, String s) {
-    Say(player,"ERROR [" + LagFix.MODID + "] " + s);
+    Say(player,"ERROR [" + Main.MODID + "] " + s);
     Err(s);
     return;
   }
@@ -167,7 +167,7 @@ public class Do {
    * @param s
    */
   public static void Err(String s) {
-    System.err.println("ERROR [" + LagFix.MODID + "] " + s);
+    System.err.println("ERROR [" + Main.MODID + "] " + s);
     return;
   }
   
@@ -188,7 +188,7 @@ public class Do {
    */
   public static void Trace(EntityPlayer player, String s) {
     if (!tracing) { return; }
-    Say(player,"TRACE [" + LagFix.NAME + "] " + s);
+    Say(player,"TRACE [" + Main.NAME + "] " + s);
     Trace(s);
   }
   
@@ -198,7 +198,7 @@ public class Do {
    */
   public static void Trace(String s) {
     if (!tracing) { return; }
-    System.out.println("TRACE [" + LagFix.MODID + "] " + s);
+    System.out.println("TRACE [" + Main.MODID + "] " + s);
     //System.err.println("TRACE [" + ModInfo.ID + "] " + s); // using the standard error output because it shows up in red in my console *grin*
   }
   

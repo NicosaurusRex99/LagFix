@@ -5,7 +5,7 @@ import java.util.List;
 
 import naturix.lagfix.Config;
 import naturix.lagfix.Do;
-import naturix.lagfix.LagFix;
+import naturix.lagfix.Main;
 import net.minecraft.block.Block;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
@@ -51,7 +51,7 @@ public class CommandFillDown implements ICommand {
 
 	@Override
 	public String getUsage(ICommandSender sender) {
-		return "/filldown <range>    - fills empty blocks +-"+LagFix.nukeRangeDefault+" blocks from where you are standing down all the way.";
+		return "/filldown <range>    - fills empty blocks +-"+Main.nukeRangeDefault+" blocks from where you are standing down all the way.";
 	}
 
 	@Override
@@ -69,7 +69,7 @@ public class CommandFillDown implements ICommand {
 	    Do.Say(player, " ");
 	    
 	    if (args.length == 0) {
-	    	  range = LagFix.nukeRangeDefault;
+	    	  range = Main.nukeRangeDefault;
 	    	  if ( range != Config.nukeRangeDefault ) { Do.Say(player, "Range set to xz+-" + range); 
 	    	  }
 	    }

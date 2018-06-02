@@ -5,7 +5,7 @@ import java.util.List;
 
 import naturix.lagfix.Config;
 import naturix.lagfix.Do;
-import naturix.lagfix.LagFix;
+import naturix.lagfix.Main;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
@@ -51,7 +51,7 @@ public int compareTo(ICommand o) {
 
 @Override
 public String getUsage(ICommandSender sender) {
-    return "/nukeentities <range>   - Kills all entities xz+-"+LagFix.nukeRangeDefault+" blocks from where you are standing, up and down all the way.";
+    return "/nukeentities <range>   - Kills all entities xz+-"+Main.nukeRangeDefault+" blocks from where you are standing, up and down all the way.";
   }
 
 @Override
@@ -67,7 +67,7 @@ public void execute(MinecraftServer server, ICommandSender sender, String[] args
     World world = sender.getEntityWorld();
     if ( world.isRemote ) { return; }
     if (args.length == 0) {
-    	  range = LagFix.nukeRangeDefault;
+    	  range = Main.nukeRangeDefault;
     	  if ( range != Config.nukeRangeDefault ) { Do.Say(player, "Range set to xz+-" + range); 
     	  }
     }

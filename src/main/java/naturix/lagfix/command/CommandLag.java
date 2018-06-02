@@ -3,7 +3,7 @@ package naturix.lagfix.command;
 import java.util.Arrays;
 import java.util.List;
 
-import naturix.lagfix.LagFix;
+import naturix.lagfix.Main;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
@@ -12,12 +12,12 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class CommandLagFix implements ICommand {
+public class CommandLag implements ICommand {
 
 
   @Override
   public String getName() {
-    return "lagfix";
+    return "lag";
   }
 
   @Override
@@ -45,7 +45,7 @@ public int compareTo(ICommand o) {
 
 @Override
 public String getUsage(ICommandSender sender) {
-	return "/lagfix - Displays a quick reference help page for all commands in this mod.";
+	return "/lag - Displays a quick reference help page for all commands in this mod.";
 }
 
 @Override
@@ -54,7 +54,7 @@ public void execute(MinecraftServer server, ICommandSender sender, String[] args
         EntityPlayer player = (EntityPlayer) sender;
         World world = player.world;
         if ( world.isRemote ) { return; }
-        LagFix.ShowHelp(player); return;
+        Main.ShowHelp(player); return;
       }
 }
 

@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 import naturix.lagfix.Config;
 import naturix.lagfix.Do;
-import naturix.lagfix.LagFix;
+import naturix.lagfix.Main;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
@@ -71,16 +71,16 @@ public void execute(MinecraftServer server, ICommandSender sender, String[] args
     if ( world.isRemote ) { return; }
     Do.Say(player, " ");
     
-    int nLimit = LagFix.animalLimitDefault; // default animal limit for each type. 50 sheep and 50 cows and 50 chickens etc.
+    int nLimit = Main.animalLimitDefault; // default animal limit for each type. 50 sheep and 50 cows and 50 chickens etc.
     if (args.length > 2) {
       try { nLimit = Integer.parseInt(args[1]); } catch (NumberFormatException e) { Do.Say(player,"Parameters are <range> and <limit>. The limit is the number of EntityAnimals to keep of each type."); return; }
-      if (nLimit < LagFix.animalLimitMinimum) { 
-        nLimit = LagFix.animalLimitMinimum;
+      if (nLimit < Main.animalLimitMinimum) { 
+        nLimit = Main.animalLimitMinimum;
         Do.Say(player,"Limit changed to the minimum."); }
     }
     Do.Say(player,"Animal limit is "+ nLimit +" per type.");
     if (args.length == 0) {
-    	  range = LagFix.nukeRangeDefault;
+    	  range = Main.nukeRangeDefault;
     	  if ( range != Config.nukeRangeDefault ) { Do.Say(player, "Range set to xz+-" + range); 
     	  }
     }

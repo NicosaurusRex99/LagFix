@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import naturix.lagfix.Do;
-import naturix.lagfix.LagFix;
+import naturix.lagfix.Main;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
@@ -57,9 +57,9 @@ public void execute(MinecraftServer server, ICommandSender sender, String[] args
 	      World world = player.world;
 	      if ( world.isRemote ) { return; }
 	      
-	      int range = LagFix.nukeRangeDefault; // arbitrary square distance to cover
+	      int range = Main.nukeRangeDefault; // arbitrary square distance to cover
 	      if ( world.isRemote) { 
-	        try { range = Integer.parseInt(params[0]); } catch (NumberFormatException e) { LagFix.ShowHelp(player); return; }
+	        try { range = Integer.parseInt(params[0]); } catch (NumberFormatException e) { Main.ShowHelp(player); return; }
 	      }
 	      range = Math.abs(range);
 	      //if ( range != LagFix.nukeRangeDefault ) { Do.Say(player, "§7Range set to xz+-" + range +"§r"); }

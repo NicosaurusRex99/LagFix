@@ -11,7 +11,7 @@ import com.google.common.collect.Lists;
 
 import naturix.lagfix.Config;
 import naturix.lagfix.Do;
-import naturix.lagfix.LagFix;
+import naturix.lagfix.Main;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
@@ -29,7 +29,7 @@ private final List<String> aliases;
 private int extra;
 private int range;
 	public CommandNukeUp(){
-    aliases = Lists.newArrayList(LagFix.MODID, "nu");
+    aliases = Lists.newArrayList(Main.MODID, "nu");
 }
 	
 @Override
@@ -57,7 +57,7 @@ private int range;
 
 @Override
 public String getUsage(ICommandSender sender) {
-	return "/nukeup <range>     - wipes all blocks xz+-"+LagFix.nukeRangeDefault+" blocks from where you are standing to up all the way.";
+	return "/nukeup <range>     - wipes all blocks xz+-"+Main.nukeRangeDefault+" blocks from where you are standing to up all the way.";
 }
 
 @Override
@@ -75,7 +75,7 @@ public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sen
     Do.Say(player, " ");
     
     if (params.length == 0) {
-    	  range = LagFix.nukeRangeDefault;
+    	  range = Main.nukeRangeDefault;
     	  if ( range != Config.nukeRangeDefault ) { Do.Say(player, "Range set to xz+-" + range); 
     	  }
     }

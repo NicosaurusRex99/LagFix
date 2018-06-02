@@ -3,10 +3,10 @@ package naturix.lagfix.proxy;
 import java.io.File;
 
 import naturix.lagfix.Config;
-import naturix.lagfix.LagFix;
+import naturix.lagfix.Main;
 import naturix.lagfix.command.CommandEntityCount;
 import naturix.lagfix.command.CommandFillDown;
-import naturix.lagfix.command.CommandLagFix;
+import naturix.lagfix.command.CommandLag;
 import naturix.lagfix.command.CommandLimitAnimals;
 import naturix.lagfix.command.CommandListOther;
 import naturix.lagfix.command.CommandListTiles;
@@ -33,7 +33,7 @@ public class CommonProxy {
 	public void preInit(FMLPreInitializationEvent e) 
 	{
 		File directory = e.getModConfigurationDirectory();
-        config = new Configuration(new File(directory.getPath(), "naturix/lagfix.cfg"));
+        config = new Configuration(new File(directory.getPath(), "nsdailr.cfg"));
         Config.readConfig();
     }
 
@@ -50,7 +50,7 @@ public class CommonProxy {
     public void serverLoad(FMLServerStartingEvent event) {
         event.registerServerCommand(new CommandNukeUp());
         event.registerServerCommand(new CommandEntityCount());
-        event.registerServerCommand(new CommandLagFix());
+        event.registerServerCommand(new CommandLag());
         event.registerServerCommand(new CommandLimitAnimals());
         event.registerServerCommand(new CommandFillDown());
         event.registerServerCommand(new CommandListOther());
@@ -63,6 +63,6 @@ public class CommonProxy {
         event.registerServerCommand(new CommandNukeOther());
         event.registerServerCommand(new CommandNukeTileEntities());
         //event.registerServerCommand(new CommandTPS());
-        LagFix.logger.info(LagFix.NAME  + " commands have loaded!");
+        Main.logger.info(Main.NAME  + " commands have loaded!");
     }
     }
