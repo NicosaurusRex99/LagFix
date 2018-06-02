@@ -27,7 +27,7 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 
-@Mod(modid = Main.MODID, version = Main.VERSION, name = Main.NAME, guiFactory = Main.GUI_FACTORY)
+@Mod(modid = Main.MODID, version = Main.VERSION, name = Main.NAME, guiFactory = Main.GUI_FACTORY, updateJSON = Main.UPDATE_URL)
 public class Main {
 	public static final String MODID = "nsdailr";
 	public static final String VERSION = "1.12.2.0";
@@ -39,7 +39,7 @@ public class Main {
 	public static boolean isMultiPlayer=false; // actual values set in serverStart()
 
 	public static final String URL = "https://github.com/NicosaurusRex99/LagFix";
-    public static final String UPDATE_URL = "https://raw.githubusercontent.com/NicosaurusRex99/LagFix/1.12.2/LagFix.json";
+    public static final String UPDATE_URL = "https://raw.githubusercontent.com/NicosaurusRex99/LagFix/1.12.2/nsdailr.json";
 
 	public static CounterPosition pos = CounterPosition.BOTTOM_LEFT;
     public static int counterColorCode = 0x00ff00;
