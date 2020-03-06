@@ -39,7 +39,7 @@ public class Main {
 	public static boolean isMultiPlayer=false; // actual values set in serverStart()
 
 	public static final String URL = "https://github.com/NicosaurusRex99/LagFix";
-    public static final String UPDATE_URL = "https://raw.githubusercontent.com/NicosaurusRex99/LagFix/1.12.2/nsdailr.json";
+    public static final String UPDATE_URL = "https://raw.githubusercontent.com/NicosaurusRex99/LagFix/1.12.2/lagfix.json";
 
 	public static CounterPosition pos = CounterPosition.BOTTOM_LEFT;
     public static int counterColorCode = 0x00ff00;
