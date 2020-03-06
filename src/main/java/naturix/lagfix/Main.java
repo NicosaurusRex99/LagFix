@@ -29,9 +29,9 @@ import net.minecraftforge.fml.common.gameevent.InputEvent;
 
 @Mod(modid = Main.MODID, version = Main.VERSION, name = Main.NAME, guiFactory = Main.GUI_FACTORY, updateJSON = Main.UPDATE_URL)
 public class Main {
-	public static final String MODID = "nsdailr";
-	public static final String VERSION = "1.12.2.0";
-	public static final String NAME = "NicosaurusRex99's Super Duper All Inclusive Lag Remover";
+	public static final String MODID = "lagfix";
+	public static final String VERSION = "1.12.2-1.0";
+	public static final String NAME = "Lag Fix";
 	public static final Integer nukeRangeDefault = Config.nukeRangeDefault;
 	public static final Integer animalLimitDefault = Config.animalLimitDefault; // how many animals of each type are kept when limiting their population.
 	public static final Integer animalLimitMinimum = Config.animalLimitMinimum;  // how many animals must be kept minimum.  this command should not remove all animals.
